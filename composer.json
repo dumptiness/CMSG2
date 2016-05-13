@@ -1,13 +1,12 @@
 {
-    "name": "jademihami/cmsg2-master",
+    "name": "hetic/exocmsg2",
     "authors": [
         {
-            "name": "jademihami",
-            "email": "jade.mihami@wanadoo.fr"
+            "name": "Ikimasoft",
+            "email": "yann@ikimasoft.fr"
         }
     ],
-    "require": {
-    }
+    "require": {},
     "autoload": {
         "psr-4": {
             "Controller\\": "Controller/",
