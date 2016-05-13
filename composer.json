@@ -1,0 +1,17 @@
+{
+    "name": "jademihami/cmsg2-master",
+    "authors": [
+        {
+            "name": "jademihami",
+            "email": "jade.mihami@wanadoo.fr"
+        }
+    ],
+    "require": {
+    }
+    "autoload": {
+        "psr-4": {
+            "Controller\\": "Controller/",
+            "Model\\": "Model/"
+        }
+    }
+}
