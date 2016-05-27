@@ -8,10 +8,10 @@
 </head>
 <body role="document">
 <nav class="navbar navbar-inverse navbar-fixed-top">
-<div class="container theme-showcase" role="main">
-    <div class="jumbotron">
-        <h1>HAHAHHAHA TU t'es perdu</h1>
+    <div class="container theme-showcase" role="main">
+        <div class="jumbotron">
+            <h1>HAHAHHAHA TU t'es perdu</h1>
+        </div>
     </div>
-</div>
 </body>
 </html>
