@@ -66,18 +66,19 @@ class PageController
     {
         // $slug = $_GET['p'] ?? $_POST['p'] ?? 'teletubbies';
         // recuperation du slug de la page demandee
-        if (isset($_GET['p'])) {
+        if(isset($_GET['p'])) {
             $slug = $_GET['p'];
         } else {
-            $slug = 'teletubbies';
+            $slug = 'done';
         }
         // recuperation de la navigation
         $nav = $this->getNav($slug);
         // recuperation des donnees de la page demandee
         $page = $this->repository->getSlug($slug);
         // si les donnees sont false, pas de page correspondant
-        if (!$page) {
+        if(!$page) {
             // page 404
+            header("HTTP/1.1 404 Not Found");
             include "View/404.php";
 
             // sortie du controller
@@ -87,8 +88,9 @@ class PageController
         include "View/page.php";
     }
 
+
     /**
-     * recuperation de la nav a partir d'une vue
+     * @param $slug
      * @return string
      */
     private function getNav($slug)
@@ -98,7 +100,7 @@ class PageController
         $nav = $this->repository->findAll();
         // inclusion de la vue de nav
         include "View/nav.php";
-        if ($nav === false) {
+        if($nav === false) {
             $nav = [];
         }
 
