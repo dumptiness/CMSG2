@@ -12,7 +12,7 @@
                         $active = "class=\"active\"";
                     }
                 ?>
-                    <li class="<?= isActive($page->slug, $slug)?>"><a href="index.php?p=<?=$page->slug?>"><?=$page->title?></a></li>
+                    <li class="<?=isActive($page->slug, $slug)?>"><a href="index.php?p=<?=$page->slug?>"><?=$page->title?></a></li>
                 <?php endforeach; ?>
             </ul>
         </div>

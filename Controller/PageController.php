@@ -29,6 +29,13 @@ class PageController
      */
     public function ajoutAction()
     {
+        if(count($_POST) === 0) {
+            // formulaire
+            // affichage de vue
+        } else {
+            // traitement de formulaire
+            // sauvegarde de la nouvelle page
+        }
     }
 
     /**
@@ -57,7 +64,10 @@ class PageController
      */
     public function listeAction()
     {
+        $data = (array) $this->repository->findAll(); // cast = tout ce qui sort sera forcément un tableau
+        include "View/admin/index.php";
     }
+
 
     /**
      *
