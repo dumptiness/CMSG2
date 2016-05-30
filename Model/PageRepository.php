@@ -6,6 +6,10 @@ namespace Model;
  * @author Yann Le Scouarnec <yann.le-scouarnec@hetic.net>
  * @package Model
  */
+/**
+ * Class PageRepository
+ * @package Model
+ */
 class PageRepository
 {
 
@@ -14,6 +18,10 @@ class PageRepository
      */
     private $PDO;
 
+    /**
+     * PageRepository constructor.
+     * @param \PDO $PDO
+     */
     public function __construct(\PDO $PDO)
     {
         $this->PDO = $PDO;
@@ -53,6 +61,28 @@ class PageRepository
                   `page`
                 ";
         $stmt = $this->PDO->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function findOne($id)
+    {
+        $sql = "
+                SELECT
+                  `id`,
+                  `slug`,
+                  `title`
+                FROM
+                  `page`
+                WHERE
+                  `id` = :id
+                ";
+        $stmt = $this->PDO->prepare($sql);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }

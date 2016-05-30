@@ -57,6 +57,11 @@ class PageController
      */
     public function detailsAction()
     {
+        if(isset($_GET['id'])) {
+            $id = $_GET['id'];
+        }
+        $data = $this->repository->findOne($id);
+        include "View/admin/detailsPage.php";
     }
 
     /**
@@ -67,7 +72,6 @@ class PageController
         $data = (array) $this->repository->findAll(); // cast = tout ce qui sort sera forcément un tableau
         include "View/admin/index.php";
     }
-
 
     /**
      *
