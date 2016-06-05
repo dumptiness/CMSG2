@@ -3,9 +3,9 @@ namespace Controller;
 
 use Model\PageRepository;
 
+
 /**
  * Class PageController
- * @author Yann Le Scouarnec <yann.le-scouarnec@hetic.net>
  * @package Controller
  */
 class PageController
@@ -29,27 +29,48 @@ class PageController
      */
     public function ajoutAction()
     {
-        if(count($_POST) === 0) {
-            // formulaire
-            // affichage de vue
+        if (count($_POST) === 0) {
+            require "View/admin/ajouterPage.php";
         } else {
-            // traitement de formulaire
-            // sauvegarde de la nouvelle page
+            $data = $this->repository->ajout($_POST);
+            header('Location: index.php?a=details&id='.$data);
+            exit(); // termine le script courant
         }
+
     }
 
     /**
-     *
+     * @throws \Exception
      */
     public function supprimerAction()
     {
+        if (!isset($_GET['id'])) {
+            throw new\Exception('Il manque un id à l\'url');
+        }
+        $id = $_GET['id'];
+        $this->repository->supprimer($id);
+        header('Location: index.php');
+        exit();
     }
 
+
     /**
-     *
+     * @throws \Exception
      */
     public function modifierAction()
     {
+        if (count($_POST) === 0) {
+            if (!isset($_GET['id'])) {
+                throw new\Exception('Il manque un id à l\'url');
+            }
+            $id = $_GET['id'];
+            $data = $this->repository->details($id);
+            require "View/admin/modifierPage.php";
+        } else {
+            $data = $this->repository->modifier($_POST);
+            header('Location: index.php');
+            exit();
+        }
     }
 
     /**
@@ -57,10 +78,16 @@ class PageController
      */
     public function detailsAction()
     {
-        if(isset($_GET['id'])) {
+        if(!isset($_GET['id'])) {
+            throw new \Exception('Il manque un id à l\'url');
+        } else {
             $id = $_GET['id'];
         }
         $data = $this->repository->findOne($id);
+        if($data === false) {
+            include "View/admin/detailsPageError.php";
+            return;
+        }
         include "View/admin/detailsPage.php";
     }
 
@@ -69,7 +96,7 @@ class PageController
      */
     public function listeAction()
     {
-        $data = (array) $this->repository->findAll(); // cast = tout ce qui sort sera forcément un tableau
+        $data = $this->repository->findAll(); // cast = tout ce qui sort sera forcément un tableau
         include "View/admin/index.php";
     }
 
@@ -101,7 +128,6 @@ class PageController
         // inclusion de la vue avec injection des variables
         include "View/page.php";
     }
-
 
     /**
      * @param $slug

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Détails de <?=$data->title?></title>
+    <title>Page non trouvée</title>
     <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../../bootstrap/css/" rel="stylesheet">
     <link href="../../bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -27,21 +27,8 @@
     </div>
 </nav>
 <div class="container theme-showcase" role="main">
-    <h1>Détails de la page</h1>
-    <a href="?a=ajouter">+ Ajouter</a><br><br>
-    <table class="table-bordered table-responsive table">
-        <tr>
-            <th>ID</th>
-            <th>Slug</th>
-            <th>Titre</th>
-        </tr>
-            <tr>
-                <td><?=$data->id?></td>
-                <td><?=$data->slug?></td>
-                <td><?=$data->title?></td>
-            </tr>
-    </table>
-    <a href="?a=ajouter">+ Ajouter</a>
+    <h1>Détails de la page</h1><br>
+    <span class="alert alert-danger">ERROR !</span>
 </div>
 </body>
 </html>

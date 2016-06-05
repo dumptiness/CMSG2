@@ -15,14 +15,9 @@ if(isset($_GET['a'])) {
 }
 
 // équivalent du if mais php 7
-// âction = $_GET['a'] ?? '';
+// $action = $_GET['a'] ?? '';
 
 switch($action){
-
-    case 'lister':
-    default:
-        $page->listeAction();
-        break;
 
     case "ajouter":
         $page->ajoutAction();
@@ -38,6 +33,11 @@ switch($action){
 
     case "details":
         $page->detailsAction();
+        break;
+
+    case 'lister':
+    default:
+        $page->listeAction();
         break;
 
 }
