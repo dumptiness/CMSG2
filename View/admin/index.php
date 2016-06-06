@@ -31,20 +31,22 @@
     <a href="?a=ajouter">+ Ajouter</a><br><br>
     <table class="table-bordered table-responsive table">
         <tr>
-            <th>ID</th>
-            <th>Slug</th>
-            <th>Titre</th>
-            <th>Action</th>
+            <th>id</th>
+            <th>slug</th>
+            <th>Title</th>
+            <th>h1</th>
+            <th>Actions</th>
         </tr>
         <?php foreach($data as $page) : ?>
         <tr>
             <td><?=$page->id?></td>
             <td><?=$page->slug?></td>
             <td><?=$page->title?></td>
+            <td><?=$page->h1?></td>
             <td>
-                <a href="/admin/index.php?a=details&id=<?=$page->id?>">d</a>
-                <a href="/admin/index.php?a=modifier&id=<?=$page->id?>">m</a>
-                <a href="/admin/index.php?a=supprimer&id=<?=$page->id?>">x</a>
+                <a href="/admin/index.php?a=details&id=<?=$page->id?>" class="btn btn-primary">Détails</a>
+                <a href="/admin/index.php?a=modifier&id=<?=$page->id?>" class="btn btn-success">Modifier</a>
+                <a href="/admin/index.php?a=supprimer&id=<?=$page->id?>" class="btn btn-danger">Supprimer</a>
             </td>
         </tr>
         <?php endforeach; ?>

@@ -5,6 +5,10 @@ namespace Model;
  * Class PageRepository
  * @package Model
  */
+/**
+ * Class PageRepository
+ * @package Model
+ */
 class PageRepository
 {
 
@@ -29,8 +33,12 @@ class PageRepository
     {
         $sql = "
         SELECT
+          `title`,
+          `h1`,
           `body`,
-          `title`
+          `span_class`,
+          `span_text`,
+          `img`
         FROM
           `page`
         WHERE
@@ -43,7 +51,7 @@ class PageRepository
     }
 
     /**
-     * @return array liste des slugs et titles de toutes les pages
+     * @return array
      */
     public function findAll()
     {
@@ -51,7 +59,8 @@ class PageRepository
         SELECT
           `id`,
           `slug`,
-          `title`
+          `title`,
+          `h1`
         FROM
           `page`
         ";
@@ -70,7 +79,12 @@ class PageRepository
         SELECT
           `id`,
           `slug`,
-          `title`
+          `title`,
+          `h1`,
+          `body`,
+          `img`,
+          `span_class`,
+          `span_text`
         FROM
           `page`
         WHERE
@@ -99,16 +113,16 @@ class PageRepository
         `body`,
         `title`,
         `img`,
-        `span_text`,
-        `span_class`)
+        `span_class`,
+        `span_text`)
         VALUES
         (:slug,
         :h1,
         :body,
         :title,
         :img,
-        :span_text,
-        :span_class)
+        :span_class,
+        :span_text)
         ";
         $stmt = $this->PDO->prepare($sql);
         $stmt->bindParam(':slug', $data['page_slug'], \PDO::PARAM_STR);
@@ -116,8 +130,8 @@ class PageRepository
         $stmt->bindParam(':body', $data['page_body'], \PDO::PARAM_STR);
         $stmt->bindParam(':title', $data['page_title'], \PDO::PARAM_STR);
         $stmt->bindParam(':img', $data['page_img'], \PDO::PARAM_STR);
-        $stmt->bindParam(':span_text', $data['span_text'], \PDO::PARAM_STR);
         $stmt->bindParam(':span_class', $data['span_class'], \PDO::PARAM_STR);
+        $stmt->bindParam(':span_text', $data['span_text'], \PDO::PARAM_STR);
         $stmt->execute();
         // retourne le dernier element selon son id
         return $this->PDO->lastInsertId();
@@ -138,8 +152,8 @@ class PageRepository
         `body`=:body,
         `title`=:title,
         `img`=:img,
-        `span_text`=:span_text,
-        `span_class`=:span_class
+        `span_class`=:span_class,
+        `span_text`=:span_text
         WHERE
           `id`= :id
         ";
@@ -149,8 +163,8 @@ class PageRepository
         $stmt->bindValue(':body', $data['page_body'], \PDO::PARAM_STR);
         $stmt->bindValue(':title', $data['page_title'], \PDO::PARAM_STR);
         $stmt->bindValue(':img', $data['page_img'], \PDO::PARAM_STR);
-        $stmt->bindValue(':span_text', $data['span_text'], \PDO::PARAM_STR);
         $stmt->bindValue(':span_class', $data['span_class'], \PDO::PARAM_STR);
+        $stmt->bindValue(':span_text', $data['span_text'], \PDO::PARAM_STR);
         $stmt->bindValue(':id', $data['page_id'], \PDO::PARAM_INT);
         $stmt->execute();
     }

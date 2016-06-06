@@ -3,7 +3,6 @@ namespace Controller;
 
 use Model\PageRepository;
 
-
 /**
  * Class PageController
  * @package Controller
@@ -30,11 +29,14 @@ class PageController
     public function ajoutAction()
     {
         if (count($_POST) === 0) {
+            // form to add a page
             require "View/admin/ajouterPage.php";
         } else {
+            // add action
             $data = $this->repository->ajout($_POST);
+            // redirection
             header('Location: index.php?a=details&id='.$data);
-            exit(); // termine le script courant
+            exit(); // end the current script
         }
 
     }
@@ -45,12 +47,15 @@ class PageController
     public function supprimerAction()
     {
         if (!isset($_GET['id'])) {
+            // throw an exception if the id is missing duh
             throw new\Exception('Il manque un id à l\'url');
         }
         $id = $_GET['id'];
+        // delete action
         $this->repository->supprimer($id);
+        // redirection
         header('Location: index.php');
-        exit();
+        exit(); // end the current script
     }
 
 
@@ -61,15 +66,19 @@ class PageController
     {
         if (count($_POST) === 0) {
             if (!isset($_GET['id'])) {
+                // throw an exception if the id is missing duh
                 throw new\Exception('Il manque un id à l\'url');
             }
             $id = $_GET['id'];
-            $data = $this->repository->details($id);
+            // find the details of one page
+            $data = $this->repository->findOne($id);
+            // form to update a page
             require "View/admin/modifierPage.php";
         } else {
             $data = $this->repository->modifier($_POST);
+            // redirection
             header('Location: index.php');
-            exit();
+            exit(); // end the current script
         }
     }
 
@@ -79,15 +88,18 @@ class PageController
     public function detailsAction()
     {
         if(!isset($_GET['id'])) {
+            // throw an exception if the id is missing duh
             throw new \Exception('Il manque un id à l\'url');
         } else {
             $id = $_GET['id'];
         }
         $data = $this->repository->findOne($id);
         if($data === false) {
+            // redirect on an error page
             include "View/admin/detailsPageError.php";
             return;
         }
+        // print the view of one page's details
         include "View/admin/detailsPage.php";
     }
 
@@ -97,6 +109,7 @@ class PageController
     public function listeAction()
     {
         $data = $this->repository->findAll(); // cast = tout ce qui sort sera forcément un tableau
+        // print the admin view = list of all the pages
         include "View/admin/index.php";
     }
 
@@ -105,27 +118,26 @@ class PageController
      */
     public function displayAction()
     {
-        // $slug = $_GET['p'] ?? $_POST['p'] ?? 'teletubbies';
-        // recuperation du slug de la page demandee
+        // get the slug of the requested page
         if(isset($_GET['p'])) {
             $slug = $_GET['p'];
         } else {
             $slug = 'done';
         }
-        // recuperation de la navigation
+        // get the navigation
         $nav = $this->getNav($slug);
-        // recuperation des donnees de la page demandee
+        // get the data
         $page = $this->repository->getSlug($slug);
-        // si les donnees sont false, pas de page correspondant
+        // if data are false, no page
         if(!$page) {
-            // page 404
+            // 404 page
             header("HTTP/1.1 404 Not Found");
             include "View/404.php";
 
-            // sortie du controller
+            // getting out of the controller
             return;
         }
-        // inclusion de la vue avec injection des variables
+        // include the view with the variables' injection
         include "View/page.php";
     }
 
@@ -135,16 +147,13 @@ class PageController
      */
     private function getNav($slug)
     {
-        // capture de l'output et placement dans l'output buffer (ob)
         ob_start();
         $nav = $this->repository->findAll();
-        // inclusion de la vue de nav
         include "View/nav.php";
         if($nav === false) {
             $nav = [];
         }
 
-        //retour du output buffer et nettoyage du buffer
         return ob_get_clean();
     }
 
